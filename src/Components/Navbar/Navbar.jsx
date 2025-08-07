@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { useAuth } from '../../Context/AuthContext';
 
 const Navbar = () => {
+  const { user, isLoggedIn, logout } = useAuth();
   const navLinks = [
     { path: '/', name: 'Home' },
     { path: '/blog', name: 'Blog' },
@@ -62,14 +64,49 @@ const Navbar = () => {
                   />
                 </svg>
               </button>
-              {/* <button className="px-4 py-2 text-sm font-medium text-blue-600 border border-blue-600 rounded-md hover:bg-blue-50 transition-colors duration-200">
-                Sign In
-              </button> */}
-              <Link to={'/sign-up'}>
-                <button className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors duration-200">
-                  Sign Up
+
+              {isLoggedIn ? (
+                <button
+                  onClick={() => logout()}
+                  className="px-4 py-2 text-sm font-medium text-blue-600 border border-blue-600 rounded-md hover:bg-blue-50 transition-colors duration-200"
+                >
+                  Sign out
                 </button>
-              </Link>
+              ) : (
+                <Link to={'/sign-in'}>
+                  <button className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors duration-200">
+                    Sign In
+                  </button>
+                </Link>
+              )}
+
+              {isLoggedIn && (
+                <div className="dropdown dropdown-end">
+                  <div
+                    tabIndex={0}
+                    role="button"
+                    className="btn btn-ghost btn-circle avatar"
+                  >
+                    <div className="w-10 rounded-full">
+                      <img
+                        alt="Tailwind CSS Navbar component"
+                        src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                      />
+                    </div>
+                  </div>
+                  <ul
+                    tabIndex={0}
+                    className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+                  >
+                    <li>
+                      <a>Dashboard</a>
+                    </li>
+                    <li>
+                      <a>Logout</a>
+                    </li>
+                  </ul>
+                </div>
+              )}
             </div>
           </div>
 

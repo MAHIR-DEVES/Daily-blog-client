@@ -8,6 +8,7 @@ import Contact from './Page/Contact/Contact';
 import BlogDetails from './Page/Blog/BlogDetails';
 import SignUp from './Page/SignUp/SignUp';
 import SignIn from './Page/Sign-in/SignIn';
+import PrivateRoute from './Context/PrivateRoute';
 
 const router = createBrowserRouter([
   {
@@ -28,7 +29,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/add-blog',
-        Component: AddBlog,
+        element: (
+          <PrivateRoute>
+            <AddBlog></AddBlog>
+          </PrivateRoute>
+        ),
       },
       {
         path: '/contact',

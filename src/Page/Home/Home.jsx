@@ -25,8 +25,6 @@ const Home = () => {
       });
   }, []);
 
-  console.log(blogs);
-
   if (loading) {
     return <p>Loading blogs...</p>;
   }

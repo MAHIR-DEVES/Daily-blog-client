@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const SignIn = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -17,7 +18,20 @@ const SignIn = () => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    console.log('Login Data:', formData);
+
+    try {
+      const response = await axios.post(
+        'http://localhost:5000/login-check',
+        formData
+      );
+
+      alert('User login successfully!');
+      localStorage.setItem('token', response.data.token);
+      navigate('/');
+    } catch (error) {
+      console.error('Error:', error.response?.data || error.message);
+      alert(error.response?.data?.message || 'Something went wrong!');
+    }
   };
 
   return (
